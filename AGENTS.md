@@ -173,7 +173,8 @@ The user sets the effort level. Defaults: record session high (xhigh for trade-o
 
 - Read the time limit and feature-freeze time from the top of `REQUIREMENTS.md`. After the freeze, only fixes, documentation, and commits.
 - While requirements are still being agreed, the implementation session may do preparation that does not depend on how requirements are interpreted: environment setup, loading data and checking its format, an empty project skeleton.
-- Build an end-to-end v0 first. Use a stub with the agreed input/output format for any part still being decided or experimented on.
+- Fix a small scope early. Within the first hour, decide the one flow that must work end to end, and do not keep expanding ideas after that. New ideas go to the decision log as candidates for later.
+- Working before polished. Build a minimal end-to-end version of that one flow first (v0), using a stub with the agreed input/output format for any part still being decided or experimented on. Polish only with the time left after it runs. Finish one thing properly rather than many things partially.
 - Start work that involves waiting (data checks, stakeholder answers, experiments) first; do simple units while waiting.
 - Stop and report when a task runs 50% over its estimate or fails twice the same way. Offer options: narrow the scope, make it a user-selectable option with a default, or proceed on a recorded assumption.
 - Commit after each verified unit. Commits are recovery points and evidence of the work process. Use a message that names the unit (for example, `U2: assign workers to stops within 15 min walk`).
