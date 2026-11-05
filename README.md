@@ -20,7 +20,7 @@ ai_skills/
 
 | 스킬 | 역할 |
 |---|---|
-| [dev-work-principles](claude/dev-work-principles/SKILL.md) | 코드를 설계·구현·테스트·검증할 때 지키는 11가지 작업 원칙 — 보안 데이터 비유출, 계획 먼저 세우기, 모듈화, edge case 테스트, 실제 동작 검증 보고서, 서브에이전트를 통한 독립 검토, 오버엔지니어링 판단 등 |
+| [dev-work-principles](claude/dev-work-principles/SKILL.md) | 코드를 설계·구현·테스트·검증할 때 지키는 11가지 작업 원칙 — 보안 데이터 비유출, 계획 먼저 세우기, 모듈화, edge case 테스트, 구현 단위별 검증 결과 폴더, 요청할 때만 쓰는 서브에이전트 독립 검토, 오버엔지니어링 판단 등 |
 | [requirements-analysis](claude/requirements-analysis/SKILL.md) | 요구사항 분석·합의·인계 보조 — 분석 초안을 원문·추론·가정으로 나눠 제시하고 사용자가 확정, 담당자 질문·역제안, 서면 합의문, 구현 단위 난이도 분류, 결정·증거 기록과 HANDOFF.md, AI 없이 설명하는 연습 |
 
 ## AGENTS.md
