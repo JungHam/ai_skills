@@ -5,8 +5,8 @@ description: 코드를 설계·구현·테스트·검증할 때 지키는 작업
 
 # 개발 작업 원칙 (Codex 버전)
 
-> **Codex 적용 참고 (2026-10-31 확인)**
-> - 설치 위치: 이 폴더를 프로젝트 범위는 `.codex/skills/dev-work-principles/`, 개인 범위는 `~/.codex/skills/dev-work-principles/`에 두면 Codex가 `SKILL.md`의 `name`·`description`만 먼저 읽어 자동 호출(implicit invocation) 여부를 판단하고, 쓰기로 결정했을 때 본문 전체를 로드한다 — 아래 frontmatter는 그대로 쓸 수 있다.
+> **Codex 적용 참고 (2026-11-05 갱신)**
+> - 설치 위치: 이 폴더를 저장소의 `.agents/skills/dev-work-principles/` 또는 개인 범위 `~/.agents/skills/dev-work-principles/`에 둔다(자료에 따라 `.codex/skills/`로 안내하기도 하니 설치 후 `$dev-work-principles`로 인식되는지 확인). 그러면 Codex가 `SKILL.md`의 `name`·`description`만 먼저 읽어 자동 호출(implicit invocation) 여부를 판단하고, 쓰기로 결정했을 때 본문 전체를 로드한다 — 아래 frontmatter는 그대로 쓸 수 있다.
 > - 원칙 10과 [`references/subagent-review.md`](references/subagent-review.md)의 "서브에이전트"는 Codex의 Subagents 기능에 대응한다: 기본 역할은 `explorer`(읽기 전용)·`worker`(읽기·쓰기)·`default`(범용)이고, 역할별 커스텀 에이전트는 `.codex/agents/*.toml`로 정의한다. 동시 실행 수는 `agents.max_threads`(기본 6), 중첩 깊이는 `agents.max_depth`(기본 1 — 서브에이전트가 또 서브에이전트를 못 낳음)로 제어된다.
 > - 나머지 원칙(1~9, 11)은 특정 도구에 매여 있지 않은 일반 지침이라 수정 없이 그대로 적용된다.
 

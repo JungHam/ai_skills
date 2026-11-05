@@ -73,7 +73,7 @@ Before implementation:
 5. Recommend one option and explain the trade-offs.
 6. Ask the user to select or approve the relevant decisions.
 
-Do not begin implementation until the user approves the implementation scope and plan.
+Record only what the user has confirmed. Do not begin implementation until the user approves the implementation scope and plan.
 
 Do not repeatedly ask for approval on minor implementation details that can be safely decided within the approved scope.
 
@@ -117,28 +117,82 @@ Implement only the approved scope.
 
 When implementation requires a change in the approved architecture or scope, stop and explain the reason before proceeding.
 
-## 7. Time and Token Efficiency
+## 7. Sessions, Time, and Token Cost
 
-Respect the project's available development time.
+AGENTS.md is read by every session, so keep this section short. Details of requirement records live in the `requirements-analysis` skill; this section covers only what every session must follow.
+
+### 7.1 Session roles and file ownership
+
+Use two sessions by default. Open an experiment session only for a unit that needs repeated experiments, and close it when the result is settled.
+
+| Session | Does | Writes | Reads only |
+|---|---|---|---|
+| Record (uses `requirements-analysis`) | Requirements, stakeholder Q&A, agreement, decisions, handoff | `REQUIREMENTS.md`, `AGREEMENT.md`, `HANDOFF.md` | Code, `EXPERIMENTS.md` |
+| Implementation | Code, tests, commits | Code, tests, README | `REQUIREMENTS.md`, `AGREEMENT.md`, `HANDOFF.md` |
+| Experiment (only when needed) | Algorithm experiments for one unit | `experiments/<topic>/`, `EXPERIMENTS.md` | Everything else |
+
+- Never edit a file owned by another session. If it needs a change, say what and why in your report; the user carries it over.
+- Re-read a shared file right before relying on it. Another session or the user may have changed it.
+- If your role in this session is unclear, ask once before working.
+
+### 7.2 Starting or resuming a session
+
+- If `HANDOFF.md` exists, read it first. Then read only the `REQUIREMENTS.md` sections the next task needs.
+- Do not re-read the original requirement document when `REQUIREMENTS.md` already covers it.
+- Continue from the first item of "next steps" in `HANDOFF.md` unless the user says otherwise.
+
+### 7.3 Reporting across sessions
+
+Sessions do not see each other. End each finished unit, or any stop, with one line in this format so the user can paste it into the record session:
+
+```text
+REPORT | unit: U2 | commit: a1b2c3 | measured: max walk 14 min | blocked: none | next: U4
+```
+
+Use `-` for fields that do not apply. Put only observed facts in `measured`; never estimate.
+
+### 7.4 Hand off instead of compacting
+
+Do not keep one session alive by repeated compaction. Hand off to a new session when:
+
+- the stage changes (after the agreement, after v0),
+- the same explanation has been needed twice,
+- responses are getting slow or the environment is unstable (do it early and often),
+- right before a long-running task.
+
+Before handing off: commit (7.6), then the record session updates `HANDOFF.md` and other sessions write a `REPORT` line. The new session's first instruction is: "Read REQUIREMENTS.md and HANDOFF.md and continue from the first item of next steps."
+
+### 7.5 Reasoning effort
+
+The user sets the effort level. Defaults: record session high (xhigh for trade-off decisions), implementation medium, experiment xhigh for designing the approach and high for iterations.
+
+- If a task needs deeper reasoning than the current setting, say so in one line instead of pushing on.
+- If a routine task is running at a high setting, say that a lower setting would be enough.
+
+### 7.6 Time
+
+- Read the time limit and feature-freeze time from the top of `REQUIREMENTS.md`. After the freeze, only fixes, documentation, and commits.
+- While requirements are still being agreed, the implementation session may do preparation that does not depend on how requirements are interpreted: environment setup, loading data and checking its format, an empty project skeleton.
+- Build an end-to-end v0 first. Use a stub with the agreed input/output format for any part still being decided or experimented on.
+- Start work that involves waiting (data checks, stakeholder answers, experiments) first; do simple units while waiting.
+- Stop and report when a task runs 50% over its estimate or fails twice the same way. Offer options: narrow the scope, make it a user-selectable option with a default, or proceed on a recorded assumption.
+- Commit after each verified unit. Commits are recovery points and evidence of the work process. Use a message that names the unit (for example, `U2: assign workers to stops within 15 min walk`).
 
 Prioritize:
 1. Essential requirements (Must Have)
 2. Important requirements (Should Have)
 3. Optional improvements (Could Have)
 
-Do not implement optional features before essential requirements are complete.
+Do not implement optional features before essential requirements are complete. If time becomes insufficient, report the remaining work and recommend what to cut; the record session logs the cut.
 
-Optimize context usage:
+### 7.7 Tokens and context
 
-- Read only files relevant to the current task.
-- Avoid repeatedly reading unchanged files.
-- Do not repeat information already established.
-- Summarize findings instead of reproducing large amounts of source code.
+- Read only files relevant to the current task; avoid re-reading unchanged files.
+- Load only the skills this session needs. The implementation session does not load `requirements-analysis`.
+- Do not repeat information already established, and do not create documentation that duplicates existing information.
+- Summarize findings instead of reproducing source code. For large outputs, show counts, the head/tail, or the failing part only.
+- Prefer targeted tests over the full suite. For a check repeated many times, write a small script once and run it.
 - Avoid unnecessary exploration and speculative research.
-- Prefer targeted tests over repeatedly running the entire test suite.
-- Do not create documentation that duplicates existing information.
-
-If the available time becomes insufficient, report the remaining work and recommend what should be prioritized.
 
 Never sacrifice essential correctness or verification merely to claim completion.
 
@@ -185,6 +239,6 @@ Keep reports concise and avoid unnecessary repetition.
 - Do not overwrite user changes.
 - Do not expose credentials, secrets, or sensitive information.
 - Do not perform destructive operations without explicit approval.
-- Do not commit, push, deploy, or modify external systems without explicit authorization.
+- Commits after each verified unit are authorized (7.6). Do not push, deploy, or modify external systems without explicit authorization.
 
 The primary goal is to deliver a working, understandable, and maintainable solution within the available time.
